@@ -12,17 +12,75 @@
         <local:ConvertColor x:Key="conversorColor"></local:ConvertColor>
         <local:ConvertIcon x:Key="conversorIcono"></local:ConvertIcon>
 
+        <Style TargetType="DockPanel" x:Key="MainDockPanel">
+            <Setter Property="Background" Value="IndianRed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=SuperheroeActual.Heroe}" Value="True">
+                    <Setter Property="Background" Value="PaleGreen"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Image" x:Key="ImagenVengador">
+            <Setter Property="Source" Value="img/avengers.png"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=SuperheroeActual.Vengador}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=SuperheroeActual.Vengador}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Image" x:Key="ImagenXMen">
+            <Setter Property="Source" Value="img/xmen.png"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=SuperheroeActual.Xmen}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=SuperheroeActual.Xmen}" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="Image" x:Key="FlechaImagen">
             <Setter Property="Source" Value="img/arrow.png"/>
             <EventSetter Event="MouseDown" Handler="Image_MouseDown"/>
+        </Style>
+
+        <Style TargetType="Image" x:Key="ImagenHeroe">
+            <Setter Property="Source" Value="{Binding Path=SuperheroeActual.Imagen}"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseCaptured" Value="False">
+                    <Setter Property="Opacity" Value="1"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="Border" x:Key="ImageBorder">
+            <Setter Property="Margin" Value="10,0"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseCaptured" Value="False">
+                    <Setter Property="BorderThickness" Value="3"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="False">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style TargetType="TextBlock" x:Key="NombreTextBlock">
             <Setter Property="DockPanel.Dock" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="300"/>
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontFamily" Value="Arial Black"/>
@@ -35,17 +93,18 @@
         </Style>
     </Window.Resources>
 
-    <DockPanel x:Name="MainDockPanel" Background="{Binding Path=SuperheroeActual.Heroe, Converter={StaticResource conversorColor}}">
+    <DockPanel x:Name="MainDockPanel" Style="{StaticResource MainDockPanel}" >
         <!--Bloque superior con Nombre del Heroe y Logos-->
         <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="50" Margin="10,5,10,10">
 
             <TextBlock Style="{StaticResource NombreTextBlock}"></TextBlock>
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                <Image Source="img/avengers.png" Visibility="{Binding Path=SuperheroeActual.Vengador, Converter={StaticResource conversorIcono}}"></Image>
-                <Image Source="img/xmen.png" Visibility="{Binding Path=SuperheroeActual.Xmen, Converter={StaticResource conversorIcono}}"></Image>
+                <Image Style="{StaticResource ImagenVengador}"></Image>
+                <Image Style="{StaticResource ImagenXMen}"></Image>
             </StackPanel>
 
+            
         </DockPanel>
 
         <!--Bloque inferior con las flechas-->
@@ -71,6 +130,8 @@
         </StackPanel>
 
         <!--Bloque de imagen que ocupa el hueco restante-->
-        <Image Margin="10,0" Source="{Binding Path=SuperheroeActual.Imagen}" Stretch="UniformToFill"></Image>
+        <Border Style="{StaticResource ImageBorder}">
+            <Image Style="{StaticResource ImagenHeroe}"></Image>
+        </Border>
     </DockPanel>
 </Window>
