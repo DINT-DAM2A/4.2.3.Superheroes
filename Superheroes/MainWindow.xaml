@@ -23,6 +23,7 @@
 
         <Style TargetType="Image" x:Key="ImagenVengador">
             <Setter Property="Source" Value="img/avengers.png"/>
+            <Setter Property="Width" Value="40"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=SuperheroeActual.Vengador}" Value="True">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -35,6 +36,7 @@
 
         <Style TargetType="Image" x:Key="ImagenXMen">
             <Setter Property="Source" Value="img/xmen.png"/>
+            <Setter Property="Width" Value="60"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=SuperheroeActual.Xmen}" Value="True">
                     <Setter Property="Visibility" Value="Visible"/>
@@ -90,12 +92,31 @@
                     <DropShadowEffect Direction="320" ShadowDepth="6"/>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="FontSize" To="60" Duration="0:0:1"></DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="FontSize" To="40" Duration="0:0:1"></DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
     <DockPanel x:Name="MainDockPanel" Style="{StaticResource MainDockPanel}" >
         <!--Bloque superior con Nombre del Heroe y Logos-->
-        <DockPanel LastChildFill="False" DockPanel.Dock="Top" Height="50" Margin="10,5,10,10">
+        <DockPanel LastChildFill="False" DockPanel.Dock="Top" Margin="10,5,10,10">
 
             <TextBlock Style="{StaticResource NombreTextBlock}"></TextBlock>
 
@@ -104,7 +125,7 @@
                 <Image Style="{StaticResource ImagenXMen}"></Image>
             </StackPanel>
 
-            
+
         </DockPanel>
 
         <!--Bloque inferior con las flechas-->
